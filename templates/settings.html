@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-head page-head-actions"><div><span class="eyebrow">Settings</span><h1>Household, backups & recovery</h1><p>Keep the everyday inventory pages focused while configuration and recovery tools live in one place.</p></div><a class="btn secondary" href="{{ url_for('system_status') }}">System status</a></section>
+
+<section class="card" id="household">
+  <div class="section-head"><div><h2>Household</h2><p class="muted">Each person's TDEE contributes to the food target. Water uses 3 L per person per day.</p></div></div>
+  <div class="settings-split">
+    <div>
+      <h3>Members</h3>
+      <div class="list">
+      {% for m in members %}
+        <div class="list-row"><div><strong>{{ m.name }}{% if m.is_primary %} <span class="pill">Primary</span>{% endif %}</strong><span>{{ '{:,.0f}'.format(m.tdee) ~ ' kcal/day' if m.tdee else 'No calorie estimate yet' }}</span></div><form method="post" action="{{ url_for('household_delete', item_id=m.id) }}" onsubmit="return confirm('Remove this household member?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn danger ghost">Remove</button></form></div>
+      {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h3>Add household member</h3>
+      <form method="post" action="{{ url_for('household') }}" class="form-grid compact"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="span-2">Name<input name="name" required maxlength="120"></label><label>Age<input name="age" type="number" min="1" max="120"></label>
+        <label>Weight<div class="unit-input"><input name="weight" type="number" step="0.1" min="0.1"><select name="weight_unit"><option value="kg">kg</option><option value="lb">lb</option></select></div></label>
+        <label>Height<div class="unit-input"><input name="height" type="number" step="0.1" min="0.1"><select name="height_unit"><option value="cm">cm</option><option value="in">inches</option></select></div></label>
+        <label>Calculation profile<select name="calc_profile"><option value="male">Male equation</option><option value="female">Female equation</option><option value="manual">Manual</option></select></label>
+        <label>Activity<select name="activity_level"><option value="sedentary">Sedentary</option><option value="light">Light</option><option value="moderate">Moderate</option><option value="very">Very active</option><option value="extra">Extremely active</option></select></label>
+        <label>Daily calorie override<input name="tdee_override" type="number" min="100" max="15000" placeholder="Optional"></label>
+        <div class="span-2 actions"><button class="btn primary">Add member</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="card spaced" id="backup-schedule">
+  <div class="section-head">
+    <div><h2>Backups</h2><p class="muted">Download a copy, save one immediately, or keep one automatic backup per day.</p></div>
+    <div class="section-actions">
+      <a class="btn secondary export-btn" href="{{ url_for('backup_full_zip') }}">Download backup now</a>
+      <form method="post" action="{{ url_for('backup_now') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn primary" type="submit">Backup now</button></form>
+      <a class="btn secondary export-btn" href="{{ url_for('backup_restore') }}">Restore backup</a>
+    </div>
+  </div>
+  <form method="post" action="{{ url_for('backup_schedule_update') }}" class="backup-form" id="backup-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="backup-toggle-row">
+      <div><b>Daily scheduled backup</b><small>One backup per day at the time you choose.</small></div>
+      <label class="toggle"><input type="checkbox" name="enabled" {% if backup_schedule.enabled %}checked{% endif %}><span></span></label>
+    </div>
+    <div class="form-grid compact">
+      <label>Backup time<input type="time" name="backup_time" value="{{ backup_schedule.backup_time }}" required></label>
+      <label>Backup folder<input type="text" name="destination_subdir" value="{{ backup_schedule.destination_subdir }}" placeholder="daily"></label>
+      <input type="hidden" name="timezone_name" id="backup-timezone" value="{{ backup_schedule.timezone_name }}">
+    </div>
+    <div class="backup-path-info">
+      <span><b>Docker backup root:</b> {{ backup_host_path }}</span>
+      <span><b>Saved beneath:</b> {{ backup_root }}{% if backup_schedule.destination_subdir %}/{{ backup_schedule.destination_subdir }}{% endif %}</span>
+      <small>Map a NAS, USB disk, or another host folder to <code>/backups</code> with <code>THIRTYSTASH_BACKUP_DIR</code>.</small>
+    </div>
+    <div class="backup-status-grid">
+      <div><span>Status</span><strong>{{ 'Enabled' if backup_schedule.enabled else 'Off' }}</strong></div>
+      <div><span>Timezone</span><strong id="backup-timezone-display">{{ backup_schedule.timezone_name }}</strong></div>
+      <div><span>Next backup</span><strong>{{ backup_next_local or '—' }}</strong></div>
+      <div><span>Last backup</span><strong>{{ backup_last_local or '—' }}</strong></div>
+    </div>
+    {% if backup_schedule.last_backup_path %}<div class="backup-note"><b>Last saved file:</b> {{ backup_schedule.last_backup_path }}</div>{% endif %}
+    {% if backup_schedule.last_error %}<div class="flash error backup-error"><b>Last backup failed:</b> {{ backup_schedule.last_error }}</div>{% endif %}
+    <div class="actions"><button class="btn primary" type="submit">Save backup schedule</button></div>
+  </form>
+</section>
+
+<section class="card spaced danger-zone">
+  <div class="section-head">
+    <div><h2>Recovery & reset</h2><p class="muted">Restore a backup after an incident or deliberately start over.</p></div>
+    <div class="section-actions"><a class="btn secondary export-btn" href="{{ url_for('backup_restore') }}">Restore backup</a><a class="btn danger-outline" href="{{ url_for('reset_start') }}">Reset ThirtyStash</a></div>
+  </div>
+  <p class="danger-copy">Resetting clears the live database and returns the app to onboarding. Existing backup files remain untouched, and ThirtyStash creates one final safety backup before reset.</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const tzField = document.getElementById('backup-timezone');
+  const tzDisplay = document.getElementById('backup-timezone-display');
+  try {
+    const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (browserTz && tzField) {
+      tzField.value = browserTz;
+      if (tzDisplay) tzDisplay.textContent = browserTz;
+    }
+  } catch (_) {}
+})();
+</script>
+{% endblock %}

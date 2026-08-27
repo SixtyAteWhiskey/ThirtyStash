@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Edit medical item · ThirtyStash{% endblock %}
+{% block content %}
+<section class="page-head"><div><span class="eyebrow">Medical inventory</span><h1>Edit {{ item.name }}</h1><p>Update quantity, category, expiration, or inspection details.</p></div></section>
+<section class="card form-card"><form method="post" class="form-grid compact"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label class="span-2">Item name<input name="name" required maxlength="180" value="{{ item.name }}"></label>
+<label>Category<select name="march_category">{% for value,label in [('M','M · Massive hemorrhage'),('A','A · Airway'),('R','R · Respiration'),('C','C · Circulation'),('H','H · Head/Hypothermia'),('Medication','Medication'),('Other','Other')] %}<option value="{{ value }}" {{ 'selected' if item.march_category == value else '' }}>{{ label }}</option>{% endfor %}</select></label>
+<label>Type<select name="item_type">{% for value,label in [('intervention','Intervention/supply'),('otc','OTC medication'),('prescription','Prescription medication'),('equipment','Equipment')] %}<option value="{{ value }}" {{ 'selected' if item.item_type == value else '' }}>{{ label }}</option>{% endfor %}</select></label>
+<label>Quantity<input name="quantity" type="number" step="0.01" min="0.01" max="1000000" value="{{ item.quantity }}"></label><label>Expiry date<input name="expiry_date" type="date" value="{{ item.expiry_date or '' }}"></label>
+<label>Inspection interval<select name="inspection_interval_days">{% for d in [30,60,90,180,365] %}<option value="{{ d }}" {{ 'selected' if item.inspection_interval_days == d else '' }}>{{ d }} days</option>{% endfor %}</select></label><label>Last inspected<input name="last_inspected" type="date" max="{{ today }}" value="{{ item.last_inspected or '' }}"></label>
+<label class="span-2">Notes<textarea name="notes" rows="3" maxlength="5000">{{ item.notes or '' }}</textarea></label>
+<div class="span-2 edit-actions"><a class="btn ghost" href="{{ url_for('medical') }}">Cancel</a><button class="btn primary">Save changes</button></div>
+</form></section>
+{% endblock %}

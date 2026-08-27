@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero"><div><span class="eyebrow">Preparedness at a glance</span><h1>Your 30-day stash</h1><p>{{ people }} household member{{ '' if people == 1 else 's' }} tracked.</p></div></section>
+<div class="metric-grid">
+  <article class="metric-card"><div class="metric-icon">🍲</div><span>Food coverage</span><strong>{{ '%.1f'|format(food_days) }} days</strong><div class="progress"><i style="width: {{ [food_days / 30 * 100, 100]|min }}%"></i></div><small>{{ '{:,.0f}'.format(stored_cals) }} / {{ '{:,.0f}'.format(calorie_target) }} kcal</small></article>
+  <article class="metric-card"><div class="metric-icon">💧</div><span>Water coverage</span><strong>{{ '%.1f'|format(water_days) }} days</strong><div class="progress"><i style="width: {{ [water_days / 30 * 100, 100]|min }}%"></i></div><small>{{ '%.1f'|format(stored_water) }} / {{ '%.1f'|format(water_target) }} L</small></article>
+  <article class="metric-card"><div class="metric-icon">⚠</div><span>Needs attention</span><strong>{{ attention|length }}</strong><small>inspection or expiry reminders</small></article>
+  <article class="metric-card"><div class="metric-icon">⚡</div><span>Household burn rate</span><strong>{{ '{:,.0f}'.format(daily) }}</strong><small>estimated kcal/day</small></article>
+</div>
+<section class="card attention-card">
+  <div class="section-head"><div><h2>Attention needed</h2><p class="muted">Overdue inspections and upcoming expirations across the stash.</p></div></div>
+  {% if attention %}
+  <div class="attention-list">
+    {% for a in attention %}
+    <a class="attention-row status-{{ a.severity }}" href="{{ url_for(a.endpoint, status='attention') }}">
+      <span><b>{{ a.name }}</b>{% if a.lot %}<small>Lot {{ a.lot }}</small>{% endif %}</span><span class="pill">{{ a.category }}</span><span>{{ a.reason }}<small>{{ a.date }}</small></span><b>→</b>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}<div class="empty compact-empty">Nothing needs attention right now.</div>{% endif %}
+</section>
+<section class="card spaced">
+  <div class="section-head"><div><h2>Quick actions</h2><p class="muted">Inventory stays up front; configuration lives under Settings.</p></div><a class="btn secondary export-btn" href="{{ url_for('export_inventory_csv') }}">Export inventory CSV</a></div>
+  <div class="quick-grid"><a href="{{ url_for('food') }}#add-food">Scan or add food <b>→</b></a><a href="{{ url_for('water') }}">Log stored water <b>→</b></a><a href="{{ url_for('medical') }}">Review medical kit <b>→</b></a><a href="{{ url_for('settings') }}">Settings & backups <b>→</b></a></div>
+</section>
+{% endblock %}
