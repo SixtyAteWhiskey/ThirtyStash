@@ -8,6 +8,9 @@ household's **30-day food and water reserve** plus medical supplies.
 ThirtyStash uses Flask, SQLite, Docker Compose, and no
 external database or message broker to stay as small and light as possible.
 
+<img width="1245" height="846" alt="image" src="https://github.com/user-attachments/assets/9899fc66-47cb-40be-8eb1-4d15b3479cc8" />
+
+
 ## Features
 
 - Household onboarding with additional household members.
