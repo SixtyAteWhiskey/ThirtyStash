@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Edit water · ThirtyStash{% endblock %}
+{% block content %}
+<section class="page-head"><div><span class="eyebrow">Water inventory</span><h1>Edit {{ item.name }}</h1><p>Update storage amount, treatment, and inspection details.</p></div></section>
+<section class="card form-card"><form method="post" class="form-grid compact"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label class="span-2">Container / location<input name="name" required maxlength="180" value="{{ item.name }}"></label>
+<label>Amount<div class="unit-input"><input name="amount" type="number" step="0.01" min="0.01" required value="{{ item.liters }}"><select name="water_unit"><option value="L" selected>liters</option><option value="gal">US gallons</option></select></div></label><label>Treatment<input name="treatment" maxlength="180" value="{{ item.treatment or '' }}"></label>
+<label>Treatment date<input name="treatment_date" type="date" max="{{ today }}" value="{{ item.treatment_date or '' }}"></label><label>Inspection interval<select name="inspection_interval_days">{% for d in [30,60,90,180,365] %}<option value="{{ d }}" {{ 'selected' if item.inspection_interval_days == d else '' }}>{{ d }} days</option>{% endfor %}</select></label>
+<label>Last inspected<input name="last_inspected" type="date" max="{{ today }}" value="{{ item.last_inspected or '' }}"></label><label class="span-2">Notes<textarea name="notes" rows="3" maxlength="5000">{{ item.notes or '' }}</textarea></label>
+<div class="span-2 edit-actions"><a class="btn ghost" href="{{ url_for('water') }}">Cancel</a><button class="btn primary">Save changes</button></div>
+</form></section>
+{% endblock %}
