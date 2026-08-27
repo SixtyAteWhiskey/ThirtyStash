@@ -3,6 +3,11 @@
 ThirtyStash is a local-first, self-hosted preparedness inventory for tracking a
 household's **30-day food and water reserve** plus medical supplies.
 
+AI DISCLAIMER
+--
+
+This was made with ChatGPT. I get that some people cringe at the thought of that, but this works and it works well from my testing. 
+
 > **Public beta:** `1.2.0-beta.1`
 
 ThirtyStash uses Flask, SQLite, Docker Compose, and no
