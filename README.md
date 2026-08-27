@@ -1,6 +1,6 @@
 # ThirtyStash
 
-<img width="1024" height="1024" alt="ThirtyStash-logo" src="https://github.com/user-attachments/assets/b1bb6e5a-63f6-451c-b41f-87ac5420bae4" />
+<img width="512" height="512" alt="ThirtyStash-logo" src="https://github.com/user-attachments/assets/b1bb6e5a-63f6-451c-b41f-87ac5420bae4" />
 
 
 ThirtyStash is a local-first, self-hosted preparedness inventory for tracking a
