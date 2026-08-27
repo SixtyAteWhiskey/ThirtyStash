@@ -5,8 +5,8 @@ household's **30-day food and water reserve** plus medical supplies.
 
 > **Public beta:** `1.2.0-beta.1`
 
-ThirtyStash is intentionally small: Flask, SQLite, Docker Compose, and no
-external database or message broker.
+ThirtyStash uses Flask, SQLite, Docker Compose, and no
+external database or message broker to stay as small and light as possible.
 
 ## Features
 
