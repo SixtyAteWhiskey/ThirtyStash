@@ -8,6 +8,11 @@ household's **30-day food and water reserve** plus medical supplies.
 ThirtyStash is intentionally small: Flask, SQLite, Docker Compose, and no
 external database or message broker.
 
+## AI Disclaimer
+
+This was made with ChatGPT.
+
+
 ## Features
 
 - Household onboarding with additional household members.
