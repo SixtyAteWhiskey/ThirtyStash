@@ -1,24 +1,12 @@
 # ThirtyStash
 
-<p align="center">
-<img width="128" height="128" alt="ThirtyStash-logo" src="https://github.com/user-attachments/assets/b1bb6e5a-63f6-451c-b41f-87ac5420bae4" />
-</p>
-
 ThirtyStash is a local-first, self-hosted preparedness inventory for tracking a
 household's **30-day food and water reserve** plus medical supplies.
 
-AI DISCLAIMER
---
+> **Public beta:** `1.2.0-beta.2`
 
-This was made with ChatGPT. I get that some people cringe at the thought of that, but this works and it works well from my testing. 
-
-> **Public beta:** `1.2.0-beta.1`
-
-ThirtyStash uses Flask, SQLite, Docker Compose, and no
-external database or message broker to stay as small and light as possible.
-
-<img width="1245" height="846" alt="image" src="https://github.com/user-attachments/assets/9899fc66-47cb-40be-8eb1-4d15b3479cc8" />
-
+ThirtyStash is intentionally small: Flask, SQLite, Docker Compose, and no
+external database or message broker.
 
 ## Features
 
@@ -46,7 +34,7 @@ Requirements:
 Clone the repository and start it:
 
 ```bash
-git clone https://github.com/SixtyAteWhiskey/ThirtyStash
+git clone YOUR_REPOSITORY_URL
 cd ThirtyStash
 docker compose up -d --build
 ```
@@ -193,9 +181,7 @@ GitHub Actions runs Python checks/tests and launches the Docker Compose stack to
 
 ## Project status
 
-`1.2.0-beta.1` is the first repository-hardened public beta. The current focus is
-single-household reliability and straightforward self-hosting rather than
-multi-user features.
+`1.2.0-beta.2` is the current public beta. It keeps the repository hardening from beta.1 and moves the Food scan/add workflow above inventory for faster day-to-day use, especially on mobile. The current focus remains single-household reliability and straightforward self-hosting rather than multi-user features.
 
 See [CHANGELOG.md](CHANGELOG.md) for release history.
 

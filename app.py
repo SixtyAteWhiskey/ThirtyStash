@@ -19,7 +19,7 @@ from flask import Flask, Response, abort, flash, jsonify, redirect, render_templ
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect, text
 
-APP_VERSION = "1.2.0-beta.1"
+APP_VERSION = "1.2.0-beta.2"
 
 
 def load_or_create_secret_key():
@@ -1370,7 +1370,7 @@ def off_lookup(barcode):
         return jsonify({"ok": False, "error": "Invalid barcode"}), 400
     fields = "code,product_name,brands,quantity,serving_size,serving_quantity,serving_quantity_unit,nutriments,image_front_small_url"
     url = f"https://world.openfoodfacts.org/api/v3/product/{barcode}.json"
-    headers = {"User-Agent": os.getenv("OFF_USER_AGENT", "ThirtyStash/1.2.0-beta.1 (self-hosted app)")}
+    headers = {"User-Agent": os.getenv("OFF_USER_AGENT", "ThirtyStash/1.2.0-beta.2 (self-hosted app)")}
     try:
         response = requests.get(url, params={"fields": fields}, headers=headers, timeout=10)
         response.raise_for_status()

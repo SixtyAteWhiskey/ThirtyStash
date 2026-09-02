@@ -1,0 +1,26 @@
+# Runtime data / secrets
+.env
+.thirtystash-secret
+*.db
+*.db-shm
+*.db-wal
+backups/*
+!backups/.gitkeep
+
+# Vendored build output
+static/vendor/quagga.min.js
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

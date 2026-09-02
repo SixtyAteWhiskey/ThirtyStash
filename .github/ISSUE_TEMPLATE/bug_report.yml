@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a reproducible problem in ThirtyStash
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Please do not include real household, prescription, inventory, or backup data.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ThirtyStash version
+      placeholder: 1.2.0-beta.2
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Docker host / browser
+      placeholder: Ubuntu 24.04 / Safari iOS 26

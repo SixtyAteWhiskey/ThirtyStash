@@ -2,6 +2,12 @@
 
 All notable changes to ThirtyStash are documented here.
 
+## [1.2.0-beta.2] - 2026-09-01
+
+### Changed
+- Moved the Food Add/Scan section above inventory so barcode scanning is always immediately accessible, including on mobile with long inventories.
+- Kept inventory search, filtering, sorting, and CSV export below the food-entry workflow.
+
 ## [1.2.0-beta.1] - 2026-08-26
 
 ### Added

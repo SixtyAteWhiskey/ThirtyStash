@@ -7,7 +7,7 @@ services:
       - "3055:3055"
     environment:
       SECRET_KEY_FILE: /data/.thirtystash-secret
-      OFF_USER_AGENT: "ThirtyStash/1.2.0-beta.1 (self-hosted preparedness inventory)"
+      OFF_USER_AGENT: "ThirtyStash/1.2.0-beta.2 (self-hosted preparedness inventory)"
       DATABASE_URL: sqlite:////data/thirtystash.db
       BACKUP_ROOT: /backups
       BACKUP_HOST_PATH: ${THIRTYSTASH_BACKUP_DIR:-./backups}
@@ -30,7 +30,7 @@ services:
     command: ["python", "backup_scheduler.py"]
     environment:
       SECRET_KEY_FILE: /data/.thirtystash-secret
-      OFF_USER_AGENT: "ThirtyStash/1.2.0-beta.1 (self-hosted preparedness inventory)"
+      OFF_USER_AGENT: "ThirtyStash/1.2.0-beta.2 (self-hosted preparedness inventory)"
       DATABASE_URL: sqlite:////data/thirtystash.db
       BACKUP_ROOT: /backups
       BACKUP_HOST_PATH: ${THIRTYSTASH_BACKUP_DIR:-./backups}
