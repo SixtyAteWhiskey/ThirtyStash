@@ -34,7 +34,7 @@ Requirements:
 Clone the repository and start it:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/SixtyAteWhiskey/ThirtyStash
 cd ThirtyStash
 docker compose up -d --build
 ```
