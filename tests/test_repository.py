@@ -34,9 +34,22 @@ def test_public_defaults_are_hardened():
     assert "debug=True" not in app_py
     assert "change-me" not in compose
     assert "SECRET_KEY_FILE" in compose
-    assert 'APP_VERSION = "1.2.0-beta.2"' in app_py
+    assert 'APP_VERSION = "1.2.0-beta.4"' in app_py
 
 def test_food_scanner_stays_above_inventory():
     food = (ROOT / "templates" / "food.html").read_text(encoding="utf-8")
     assert food.index('id="add-food"') < food.index('<h2>Inventory</h2>')
+
+
+
+def test_water_entry_stays_above_inventory():
+    water = (ROOT / "templates" / "water.html").read_text(encoding="utf-8")
+    assert water.index('id="add-water"') < water.index('<h2>Stored water</h2>')
+
+def test_browser_icons_are_local_and_declared():
+    base = (ROOT / "templates" / "base.html").read_text(encoding="utf-8")
+    assert "favicon.png" in base
+    assert "apple-touch-icon.png" in base
+    assert (ROOT / "static" / "favicon.png").is_file()
+    assert (ROOT / "static" / "apple-touch-icon.png").is_file()
 

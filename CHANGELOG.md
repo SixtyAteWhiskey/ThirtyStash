@@ -2,6 +2,18 @@
 
 All notable changes to ThirtyStash are documented here.
 
+## [1.2.0-beta.4] - 2026-09-01
+
+### Added
+- Added the ThirtyStash logo as a local browser favicon for faster tab identification.
+- Added a matching Apple touch icon for saved home-screen shortcuts on supported devices.
+
+## [1.2.0-beta.3] - 2026-09-01
+
+### Changed
+- Moved the Water Add Storage section above the stored-water inventory so new entries stay immediately accessible with long inventories.
+- Kept water search, filtering, sorting, and CSV export below the entry workflow, matching the Food page layout.
+
 ## [1.2.0-beta.2] - 2026-09-01
 
 ### Changed

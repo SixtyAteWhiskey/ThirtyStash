@@ -44,9 +44,9 @@ and `.env.example`.
 A sensible first tag is:
 
 ```bash
-git tag -a v1.2.0-beta.2 -m "ThirtyStash 1.2.0 public beta"
-git push origin v1.2.0-beta.2
+git tag -a v1.2.0-beta.4 -m "ThirtyStash 1.2.0 public beta"
+git push origin v1.2.0-beta.4
 ```
 
-Use the `1.2.0-beta.2` section of `CHANGELOG.md` as the basis for the GitHub
+Use the `1.2.0-beta.4` section of `CHANGELOG.md` as the basis for the GitHub
 release notes.

@@ -3,7 +3,7 @@
 ThirtyStash is a local-first, self-hosted preparedness inventory for tracking a
 household's **30-day food and water reserve** plus medical supplies.
 
-> **Public beta:** `1.2.0-beta.2`
+> **Public beta:** `1.2.0-beta.4`
 
 ThirtyStash is intentionally small: Flask, SQLite, Docker Compose, and no
 external database or message broker.
@@ -181,7 +181,7 @@ GitHub Actions runs Python checks/tests and launches the Docker Compose stack to
 
 ## Project status
 
-`1.2.0-beta.2` is the current public beta. It keeps the repository hardening from beta.1 and moves the Food scan/add workflow above inventory for faster day-to-day use, especially on mobile. The current focus remains single-household reliability and straightforward self-hosting rather than multi-user features.
+`1.2.0-beta.4` is the current public beta. It keeps the repository hardening from beta.1, places both Food and Water entry workflows above their inventory lists, and adds local browser/app icons for quicker identification. The current focus remains single-household reliability and straightforward self-hosting rather than multi-user features.
 
 See [CHANGELOG.md](CHANGELOG.md) for release history.
 
